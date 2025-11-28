@@ -6,14 +6,14 @@ tags: [network reciprocity]
 math: true
 ---
 
-**上一篇文章中提到的几种机制中，前三种机制都是通过直接影响博弈双方的收益来影响合作演化的。而我们知道网络互惠(network reciprocity)其实并不直接影响博弈双方的收益，而是通过结构效应对演化过程产生影响，而这个影响可以通过引入一个修正项H来表示。文本主要探讨网络互惠是如何通过结构效应实现对演化过程的影响**
+**上一篇文章中提到的几种机制中，我们知道网络互惠(network reciprocity)其实并不直接影响博弈双方的收益，而是通过结构效应对演化过程产生影响，文本主要探讨网络互惠是如何通过结构效应实现对演化过程的影响**
 
 ### 1. **促进合作演化的几种机制的特点是什么？**
 * 亲缘选择、直接互惠、间接互惠都是在**无结构**的群体中研究的 (因为在无结构的群体中，如果不外加机制，群体演化会偏好于defector)
 * 在网络互惠这样一个更加贴近现实的场景中，个体处于一个**结构化**的网络中 （who-meets-whom is determined by spatial relationships or social networks）
 * 微观层面上：
-    * 亲缘选择、间接互惠的系数直接作用在每一次博弈上。
-    * 直接互惠和网络互惠每一次博弈都是原始PD，直接互惠的影响体现在长期交互的累积（通过概率w来进行反复博弈），而网络互惠则通过结构化效应改变了个体之间的相遇模式，从而影响了博弈的长期收益。
+    * 亲缘选择的系数直接作用在每一次博弈上。
+    * 直接互惠、间接互惠和网络互惠每一次博弈都是原始PD，直接互惠与间接互惠的影响体现在长期交互的累积（通过概率w来进行反复博弈以及通过概率p来得知对方声誉值），而网络互惠则通过结构化效应改变了个体之间的相遇模式，从而影响了博弈的长期收益。
 
 ### 2. **网络互惠的结构效应如何影响演化过程？**
 1. 对于亲缘选择、直接互惠、间接互惠的促进合作演化的条件，都可以通过先将**机制的影响折算成一个新的PD矩阵**，然后再通过复制子方程来直接推导。而对于网络互惠来说，首先，其结构效应很难直接折算到收益矩阵中，其次由于网络结构并不是well-mixed population，因此就算可以折算，也无法直接通过复制子方程来推导促进合作演化的条件。但是可以考虑使用**pair approximation**以及**diffusion approximation**来近似整个演化过程。
@@ -31,7 +31,7 @@ math: true
     * 个体都以Death-Birth策略更新，且个体适应度计算公式为：$f=(1-w)+ wP$
 3. **pair approximation and diffusion approximation**
 
-    pair approximation体现在对于一个中心个体，其邻居个体可以看成独立同分布的个体，所以对于个体x来说，其邻居C个体的数量与D个体的数量为$k_C$与$k_D$的概率分别可以用 $q_{C\|x}^{k_C},q_{D\|x}^{k_D}$来表示
+    pair approximation体现在对于一个中心个体，其邻居个体可以看成独立同分布的个体，所以对于个体x来说，其邻居C个体的数量与D个体的数量为$k_C$与$k_D$的概率分别可以用 $q_{C\|x}^{k_C},q_{D\|x}^{k_D}$来表示。
 
     $$P_C+P_D=1$$
 
@@ -69,7 +69,7 @@ math: true
 
     在弱选择$w << 1$时，$\dot{P}\_C$ 时间复杂度是O(w), $\dot{q}\_{C\|C}$ 时间复杂度是O(1), 因此在演化过程中 $\dot{q}_{C\|C}$ 很快便会达到平衡态，此时 $F_2=0$ 则有:
 
-    $$q_{C|C} - q_{D|C} = \frac{1}{k-1}$$
+    $$q_{C|C} - q_{C|D} = \frac{1}{k-1}$$
 
     $$q_{C|C} = P_C + \frac{1}{k-1}(1-P_C)$$
 
@@ -87,7 +87,7 @@ math: true
 
     $$\beta = (k+1)a + (k^2-k-1)b - c - (k^2-1)d.$$
 
-    固定概率 $\Phi_C(y) $, 即$P_C(t=0)=y$, 满足方程
+    固定概率 $\phi_C(y) $, 即$P_C(t=0)=y$, 满足方程
 
     $$\phi_C(y) = \mathbb{E}[\phi_C(y + \Delta P_C)]$$
 
@@ -111,7 +111,7 @@ math: true
 
     $$\phi_C(y) = y + w \cdot \frac{N}{6k}y(1-y)\left[(\alpha + 3\beta) + \alpha y\right] $$
 
-    因此，$\rho_C=\Phi_C(1/N)$,即有$\rho_A > 1/N$ 当且仅当 $\alpha+3\beta > 0$ 时，即：
+    因此，$\rho_C=\phi_C(1/N)$,即有$\rho_A > 1/N$ 当且仅当 $\alpha+3\beta > 0$ 时，即：
 
     $$(k^2 + 2k + 1)a + (2k^2 - 2k - 1)b > (k^2 - k + 1)c + (2k^2 + k - 1)d.$$
 
@@ -119,7 +119,18 @@ math: true
 
     $$\frac{b}{c}>k$$
 
+### 总结
+网络中合作者的演化动力学可以用pair approximation方法表达出合作者数量随时间变化的函数
+
+网络结构对合作演化的影响体现在两个时间尺度上：
+
+（1）快时间尺度：局部策略配置快速调整，系统趋向慢流形，表现为同质策略个体的空间聚集；
+
+（2）慢时间尺度：系统在慢流形上演化，合作者频率 $P_C$ 的变化率 $\frac{dP_C}{dt}$ 决定了合作的长期演化趋势。
+
 ### 参考文献
 [1]Nowak M A. Five rules for the evolution of cooperation[J]. science, 2006, 314(5805): 1560-1563.
 
 [2]Ohtsuki H, Hauert C, Lieberman E, et al. A simple rule for the evolution of cooperation on graphs and social networks[J]. Nature, 2006, 441(7092): 502-505.
+
+[3]Ohtsuki H, Nowak M A. The replicator equation on graphs[J]. Journal of theoretical biology, 2006, 243(1): 86-97.
